@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.MarkAmendMapper">
+    
+    <resultMap type="MarkAmend" id="MarkAmendResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="markId"    column="mark_id"    />
+        <result property="username"    column="username"    />
+        <result property="cjkh"    column="cjkh"    />
+        <result property="wssx"    column="wssx"    />
+        <result property="hzgj"    column="hzgj"    />
+        <result property="cxfz"    column="cxfz"    />
+        <result property="avgScore"    column="avg_score"    />
+        <result property="explanation"    column="explanation"    />
+        <result property="scoringTime"    column="scoring_time"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isDeleted"    column="is_deleted"    />
+        <result property="isUpdated"    column="is_updated"    />
+    </resultMap>
+
+    <sql id="selectMarkAmendVo">
+        select id, user_id, mark_id, username, cjkh, wssx, hzgj, cxfz, avg_score, explanation, scoring_time, create_time, update_time, is_deleted,is_updated from mark_amend
+    </sql>
+
+    <select id="selectMarkAmendList" parameterType="MarkAmend" resultMap="MarkAmendResult">
+        <include refid="selectMarkAmendVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="markId != null "> and mark_id = #{markId}</if>
+            <if test="username != null  and username != ''"> and username like concat('%', #{username}, '%')</if>
+            <if test="cjkh != null "> and cjkh = #{cjkh}</if>
+            <if test="wssx != null "> and wssx = #{wssx}</if>
+            <if test="hzgj != null "> and hzgj = #{hzgj}</if>
+            <if test="cxfz != null "> and cxfz = #{cxfz}</if>
+            <if test="avgScore != null "> and avg_score = #{avgScore}</if>
+            <if test="explanation != null  and explanation != ''"> and explanation = #{explanation}</if>
+            <if test="scoringTime != null "> and scoring_time = #{scoringTime}</if>
+            <if test="isDeleted != null "> and is_deleted = #{isDeleted}</if>
+            <if test="isUpdated != null">and is_updated = #{isUpdated}</if>
+        </where>
+    </select>
+    
+    <select id="selectMarkAmendById" parameterType="Long" resultMap="MarkAmendResult">
+        <include refid="selectMarkAmendVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectMarkAmendByMarkId" resultMap="MarkAmendResult">
+        <include refid="selectMarkAmendVo"/>
+        where mark_id = #{markId}
+    </select>
+
+    <insert id="insertMarkAmend" parameterType="MarkAmend" useGeneratedKeys="true" keyProperty="id">
+        insert into mark_amend
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="markId != null">mark_id,</if>
+            <if test="username != null and username != ''">username,</if>
+            <if test="cjkh != null">cjkh,</if>
+            <if test="wssx != null">wssx,</if>
+            <if test="hzgj != null">hzgj,</if>
+            <if test="cxfz != null">cxfz,</if>
+            <if test="avgScore != null">avg_score,</if>
+            <if test="explanation != null">explanation,</if>
+            <if test="scoringTime != null">scoring_time,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="isDeleted != null">is_deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="markId != null">#{markId},</if>
+            <if test="username != null and username != ''">#{username},</if>
+            <if test="cjkh != null">#{cjkh},</if>
+            <if test="wssx != null">#{wssx},</if>
+            <if test="hzgj != null">#{hzgj},</if>
+            <if test="cxfz != null">#{cxfz},</if>
+            <if test="avgScore != null">#{avgScore},</if>
+            <if test="explanation != null">#{explanation},</if>
+            <if test="scoringTime != null">#{scoringTime},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="isDeleted != null">#{isDeleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMarkAmend" parameterType="MarkAmend">
+        update mark_amend
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="markId != null">mark_id = #{markId},</if>
+            <if test="username != null and username != ''">username = #{username},</if>
+            <if test="cjkh != null">cjkh = #{cjkh},</if>
+            <if test="wssx != null">wssx = #{wssx},</if>
+            <if test="hzgj != null">hzgj = #{hzgj},</if>
+            <if test="cxfz != null">cxfz = #{cxfz},</if>
+            <if test="avgScore != null">avg_score = #{avgScore},</if>
+            <if test="explanation != null">explanation = #{explanation},</if>
+            <if test="scoringTime != null">scoring_time = #{scoringTime},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+            <if test="isUpdated != null">is_updated = #{isUpdated},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMarkAmendById" parameterType="Long">
+        delete from mark_amend where id = #{id}
+    </delete>
+
+    <delete id="deleteMarkAmendByIds" parameterType="String">
+        delete from mark_amend where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="deleteMarkAmendByMarkIds" parameterType="String">
+        delete from mark_amend where mark_id in
+        <foreach item="markId" collection="array" open="(" separator="," close=")">
+            #{markId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteMarkBYMarkId" parameterType="Long">
+        delete from mark where mark_id = #{markId}
+    </delete>
+</mapper>
