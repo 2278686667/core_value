@@ -111,7 +111,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange"
+    <el-table v-loading="loading" :data="listA" @selection-change="handleSelectionChange" :key="certinfoKey"
               row-key="id">
       <el-table-column label="id" align="center" prop="id" />
       <el-table-column label="评分时日期(上一个月)" align="center" prop="scoringTime" width="180" sortable>
@@ -129,11 +129,11 @@
       <el-table-column label="是否修改" align="center">
         <template slot-scope="scope">
 
-          <el-button v-if="scope.row.isUpdated==1"
+          <el-button v-if="scope.row.isUpdated==1&&scope.row.markId!=null"
                      size="mini"
                      type="success"
           >已修改</el-button>
-          <el-button v-else
+          <el-button v-if="scope.row.isUpdated==0&&scope.row.markId!=null"
                      size="mini"
                      type="warning"
           >未修改</el-button>
@@ -168,7 +168,7 @@
     />
 
     <!-- 添加或修改评分记录表修正对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="评分日期（上一个月）" >
           <el-date-picker clearable
@@ -227,6 +227,7 @@ export default {
       }
     };
     return {
+      certinfoKey:false,
       // 遮罩层
       loading: true,
       // 选中数组
@@ -243,6 +244,7 @@ export default {
       amendList: [],
       markList: [],
       list:[],
+      listA:[],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -311,37 +313,35 @@ export default {
   },
   created() {
     this.getList();
-    this.getListMark();
   },
   methods: {
-    /** 查询评分记录表修正列表 */
-    getList() {
+    /** 查询评分记录表修正列表 */ async getList() {
+
       this.loading = true;
-      listAmend(this.queryParams).then(response => {
+      await listAmend(this.queryParams).then(response => {
+        this.certinfoKey != this.certinfoKey;
         this.amendList = response.rows;
+        this.getListMark();
         console.log(this.amendList)
         this.total = response.total;
         this.loading = false;
       });
     },
-    getListMark() {
+    async getListMark() {
       this.loading = true;
-      listMark(this.queryParams).then(response => {
+      await listMark(this.queryParams).then(response => {
         this.markList = response.rows;
         this.loading = false;
+        this.list=[];
         for (let i = 0; i < this.markList.length; i++) {
           for (let j = 0; j < this.amendList.length; j++) {
-            if (this.markList[i].id==this.amendList[j].markId){
-
-              // this.amendList[j].push({'children':[]});
-              this.amendList[j].children=[this.markList[i]]
+            if (this.markList[i].id == this.amendList[j].markId) {
+              this.amendList[j].children = [this.markList[i]]
               this.list.push(this.amendList[i])
-              // this.list.push(this.markList[j])
-
             }
           }
         }
-
+        this.listA=this.list
       });
     },
     // 取消按钮
@@ -390,7 +390,7 @@ export default {
       this.reset();
       this.form.scoringTime = this.timeDefault;
       this.open = true;
-      this.title = "添加评分记录表修正";
+      this.title = "核心价值观录入表";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -399,7 +399,7 @@ export default {
       getAmend(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改评分记录表修正";
+        this.title = "修改核心价值观录入表";
       });
     },
     /** 提交按钮 */

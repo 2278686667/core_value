@@ -57,8 +57,8 @@ public class MarkAmend extends BaseEntity
     private String explanation;
 
     /** 评分时间，一般本月评分上一个月 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "评分时间，一般本月评分上一个月", width = 30, dateFormat = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM")
+    @Excel(name = "评分时间，一般本月评分上一个月", width = 30, dateFormat = "yyyy-MM")
     private Date scoringTime;
 
     /** 0--未删除 1--已删除 */

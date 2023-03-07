@@ -2,6 +2,7 @@ package com.ruoyi.system.service.impl;
 
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.MarkAmendMapper;
@@ -53,8 +54,16 @@ public class MarkAmendServiceImpl implements IMarkAmendService
     @Override
     public int insertMarkAmend(MarkAmend markAmend)
     {
+        markAmend.setUserId(SecurityUtils.getUserId());
+        markAmend.setUsername(SecurityUtils.getUsername());
         markAmend.setCreateTime(DateUtils.getNowDate());
-        return markAmendMapper.insertMarkAmend(markAmend);
+        int i;
+        try {
+            i = markAmendMapper.insertMarkAmend(markAmend);
+        } catch (Exception e) {
+            throw new RuntimeException("暂未开放");
+        }
+        return i;
     }
 
     /**

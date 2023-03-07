@@ -350,7 +350,7 @@ computed: {
       this.reset();
       this.form.scoringTime = this.timeDefault;
       this.open = true;
-      this.title = "核心价值观记录表";
+      this.title = "核心价值观录入表";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -359,7 +359,7 @@ computed: {
       getMark(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改核心价值观记录表";
+        this.title = "修改核心价值观录入表";
       });
     },
     /** 提交按钮 */
@@ -401,3 +401,11 @@ computed: {
   }
 };
 </script>
+<style>
+.el-input--medium .el-input__inner{
+  width: 220px;
+}
+.el-textarea__inner {
+  width: 400px;
+}
+</style>
