@@ -125,7 +125,7 @@
       <el-table-column label="合作共进" align="center" prop="hzgj" />
       <el-table-column label="创新发展" align="center" prop="cxfz" />
       <el-table-column label="平均分" align="center" prop="avgScore" />
-      <el-table-column label="说明" align="center" prop="explanation" />
+      <el-table-column label="说明" align="center" prop="explanation" :show-overflow-tooltip="true" />
       <el-table-column label="是否修改" align="center">
         <template slot-scope="scope">
 
@@ -169,7 +169,7 @@
 
     <!-- 添加或修改评分记录表修正对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="200px">
         <el-form-item label="评分日期（上一个月）" >
           <el-date-picker clearable
                           v-model="form.scoringTime"
@@ -179,23 +179,25 @@
                           placeholder="请选择评分月份，一般本月评分上一个月">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="用户名称" prop="username">
-          <el-input v-model="form.username" placeholder="请输入用户名称" />
-        </el-form-item>
-        <el-form-item label="成就客户" prop="cjkh">
-          <el-input v-model="form.cjkh" placeholder="请输入成就客户" />
+        <el-form-item label="成就客户(分)" prop="cjkh">
+          <el-input-number v-model="form.cjkh"  :min="0" :max="5" label="请输入成就客户"></el-input-number>
+          <el-rate v-model="form.cjkh" allow-half="true"></el-rate>
         </el-form-item>
         <el-form-item label="务实守信" prop="wssx">
-          <el-input v-model="form.wssx" placeholder="请输入务实守信" />
+          <el-input-number v-model="form.wssx"  :min="0" :max="5" label="请输入务实守信"></el-input-number>
+          <el-rate v-model="form.wssx" allow-half="true"></el-rate>
         </el-form-item>
         <el-form-item label="合作共进" prop="hzgj">
-          <el-input v-model="form.hzgj" placeholder="请输入合作共进" />
+          <el-input-number v-model="form.hzgj"  :min="0" :max="5" label="请输入合作共进"></el-input-number>
+          <el-rate v-model="form.hzgj" allow-half="true"></el-rate>
         </el-form-item>
         <el-form-item label="创新发展" prop="cxfz">
-          <el-input v-model="form.cxfz" placeholder="请输入创新发展" />
+          <el-input-number v-model="form.cxfz"  :min="0" :max="5" label="请输入创新发展"></el-input-number>
+          <el-rate v-model="form.cxfz" allow-half="true"></el-rate>
         </el-form-item>
+
         <el-form-item label="说明" prop="explanation">
-          <el-input v-model="form.explanation" type="textarea" placeholder="请输入说明" />
+          <el-input v-model="form.explanation" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <p style="color: #ff4949">
           说明（3分以下或者4分及以上的需要说明情况）
@@ -434,14 +436,20 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
+      var newdata=null;
+      if(!(this.queryParams.scoringTime === ''|| this.queryParams.scoringTime === null || this.queryParams.scoringTime === undefined)) {
+        newdata=this.queryParams.scoringTime;
+      }else {
+        newdata=new Date().getTime();
+      }
       this.download('system/amend/export', {
         ...this.queryParams
-      }, `amend_${new Date().getTime()}.xlsx`)
+      }, `价值观考核_${newdata}.xlsx`)
     }
   }
 };
 </script>
-<style>
+<style scoped>
 .demo-table-expand {
   font-size: 0;
 }
@@ -452,5 +460,10 @@ export default {
 .demo-table-expand .el-form-item {
   margin-bottom: 0;
   width: 50%;
+}
+.el-rate{
+  float: right;
+  margin-right: 200px;
+  margin-top: 8px;
 }
 </style>

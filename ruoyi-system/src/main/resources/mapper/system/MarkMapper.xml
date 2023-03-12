@@ -34,7 +34,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="hzgj != null "> and hzgj = #{hzgj}</if>
             <if test="cxfz != null "> and cxfz = #{cxfz}</if>
             <if test="avgScore != null "> and avg_score = #{avgScore}</if>
-            <if test="scoringTime != null "> and  DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= date(#{scoringTime}) </if>
+            <if test="scoringTime != null "> and date_format(scoring_time,'%Y-%m')=date_format(#{scoringTime},'%Y-%m')</if>
+<!--            <if test="scoringTime != null "> and  DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= date(#{scoringTime}) </if>-->
             <if test="explanation != null  and explanation != ''"> and explanation = #{explanation}</if>
             <if test="isDeleted != null "> and is_deleted = #{isDeleted}</if>
         </where>

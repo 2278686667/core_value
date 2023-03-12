@@ -116,12 +116,12 @@ public @interface Excel
     /**
      * 导出列头背景色
      */
-    public IndexedColors headerBackgroundColor() default IndexedColors.GREY_50_PERCENT;
+    public IndexedColors headerBackgroundColor() default IndexedColors.WHITE;
 
     /**
      * 导出列头字体颜色
      */
-    public IndexedColors headerColor() default IndexedColors.WHITE;
+    public IndexedColors headerColor() default IndexedColors.BLACK;
 
     /**
      * 导出单元格背景色

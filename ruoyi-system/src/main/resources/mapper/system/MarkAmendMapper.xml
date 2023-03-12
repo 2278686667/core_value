@@ -38,7 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="cxfz != null "> and cxfz = #{cxfz}</if>
             <if test="avgScore != null "> and avg_score = #{avgScore}</if>
             <if test="explanation != null  and explanation != ''"> and explanation = #{explanation}</if>
-            <if test="scoringTime != null "> and scoring_time = #{scoringTime}</if>
+            <if test="scoringTime != null "> and date_format(scoring_time,'%Y-%m')=date_format(#{scoringTime},'%Y-%m')</if>
             <if test="isDeleted != null "> and is_deleted = #{isDeleted}</if>
             <if test="isUpdated != null">and is_updated = #{isUpdated}</if>
         </where>

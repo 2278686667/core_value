@@ -117,7 +117,7 @@
       <el-table-column label="创新发展" align="center" prop="cxfz" />
       <el-table-column label="平均分" align="center" prop="avgScore" />
 
-      <el-table-column label="说明" align="center" prop="explanation" />
+      <el-table-column label="说明" align="center" prop="explanation" :show-overflow-tooltip="true"  />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -159,18 +159,21 @@
           </el-date-picker>
         </el-form-item>
         <el-form-item label="成就客户(分)" prop="cjkh">
-          <el-input v-model="form.cjkh" placeholder="请输入成就客户" />
+          <el-input-number v-model="form.cjkh"  :min="0" :max="5" label="请输入成就客户"></el-input-number>
+          <el-rate :value="form.cjkh" allow-half="true"></el-rate>
         </el-form-item>
         <el-form-item label="务实守信" prop="wssx">
-          <el-input v-model="form.wssx" placeholder="请输入务实守信" />
+          <el-input-number v-model="form.wssx"  :min="0" :max="5" label="请输入务实守信"></el-input-number>
+          <el-rate :value="form.wssx" allow-half="true"></el-rate>
         </el-form-item>
         <el-form-item label="合作共进" prop="hzgj">
-          <el-input v-model="form.hzgj" placeholder="请输入合作共进" />
+          <el-input-number v-model="form.hzgj"  :min="0" :max="5" label="请输入合作共进"></el-input-number>
+          <el-rate :value="form.hzgj" allow-half="true"></el-rate>
         </el-form-item>
         <el-form-item label="创新发展" prop="cxfz">
-          <el-input v-model="form.cxfz" placeholder="请输入创新发展" />
+          <el-input-number v-model="form.cxfz"  :min="0" :max="5" label="请输入创新发展"></el-input-number>
+          <el-rate :value="form.cxfz" allow-half="true"></el-rate>
         </el-form-item>
-<!--        <el-form-item label="评分时间，一般本月评分上一个月" prop="scoringTime">-->
 
         <el-form-item label="说明" prop="explanation">
           <el-input v-model="form.explanation" type="textarea" placeholder="请输入内容" />
@@ -199,7 +202,8 @@ export default {
   data() {
     //小数验证规则
     var valiNumberPass1 = (rule, value, callback) => {//包含小数的数字
-      let reg = /^[+-]?(0|([1-5]\d*))(\.\d+)?$/g;
+      // let reg = /^[+-]?(0|([1-5]\d*))(\.\d+)?$/g;
+      let reg = /^(0|0\.0|0\.5|1|1\.0|1\.5|2|2\.0|2\.5|3|3\.0|3\.5|4|4\.0|4\.5|5|5\.0)$/g;
       if (value === '') {
         callback(new Error('请输入内容'));
       } else if (!reg.test(value)) {
@@ -254,16 +258,17 @@ export default {
           { required: true, message: "用户名称不能为空", trigger: "blur" }
         ],
         cjkh: [
-          { required: true, validator: valiNumberPass1, trigger: "blur" }
+          { required: true, message:"请输入分数", trigger: "blur" }
         ],
+
         wssx: [
-          { required: true, validator: valiNumberPass1, trigger: "blur" }
+          { required: true, message:"请输入分数", trigger: "blur" }
         ],
         hzgj: [
-          { required: true, validator: valiNumberPass1, trigger: "blur" }
+          { required: true, message:"请输入分数", trigger: "blur" }
         ],
         cxfz: [
-          { required: true, validator: valiNumberPass1, trigger: "blur" }
+          { required: true, message:"请输入分数", trigger: "blur" }
         ],
         scoringTime: [
           { required: true, message: "评分时间，一般本月评分上一个月不能为空", trigger: "blur" }
@@ -401,11 +406,19 @@ computed: {
   }
 };
 </script>
-<style>
-.el-input--medium .el-input__inner{
-  width: 220px;
+<style scoped>
+/*.el-input--medium .el-input__inner{*/
+/*  width: 220px;*/
+/*}*/
+/*.el-textarea__inner {*/
+/*  width: 400px;*/
+/*}*/
+.el-input-number{
+  display: inline-block;
 }
-.el-textarea__inner {
-  width: 400px;
+.el-rate{
+  float: right;
+  margin-right: 200px;
+  margin-top: 8px;
 }
 </style>

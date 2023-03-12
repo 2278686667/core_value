@@ -56,7 +56,7 @@ public class MarkAmendController extends BaseController
     {
         List<MarkAmend> list = markAmendService.selectMarkAmendList(markAmend);
         ExcelUtil<MarkAmend> util = new ExcelUtil<MarkAmend>(MarkAmend.class);
-        util.hideColumn("userId","markId","isDeleted");
+        util.hideColumn("userId","markId","isDeleted","isUpdated");
         util.exportExcel(response, list, "评分记录表修正数据");
     }
 

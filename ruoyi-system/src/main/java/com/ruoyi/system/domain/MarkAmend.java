@@ -29,7 +29,7 @@ public class MarkAmend extends BaseEntity
     private Long markId;
 
     /** 用户名称 */
-    @Excel(name = "用户名称")
+    @Excel(name = "姓名")
     private String username;
 
     /** 成就客户 */
@@ -53,7 +53,7 @@ public class MarkAmend extends BaseEntity
     private Double avgScore;
 
     /** 说明 */
-    @Excel(name = "说明")
+    @Excel(name = "说明（3分以下或者4分及以上的需要说明情况）")
     private String explanation;
 
     /** 评分时间，一般本月评分上一个月 */
