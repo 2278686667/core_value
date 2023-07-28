@@ -14,9 +14,11 @@
  Date: 12/03/2023 12:00:24
 */
 
+DROP DATABASE IF EXISTS `core_value`;
+CREATE DATABASE  `core_value` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
-
+use core_value
 -- ----------------------------
 -- Table structure for gen_table
 -- ----------------------------
