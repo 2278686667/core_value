@@ -279,6 +279,9 @@ export default {
         updateTime: [
           { required: true, message: "$comment不能为空", trigger: "blur" }
         ],
+        explanation: [
+          { required: true, message: "说明不能为空", trigger: "blur" }
+        ],
       }
     };
   },

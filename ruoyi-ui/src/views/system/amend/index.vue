@@ -199,7 +199,7 @@
         <el-form-item label="说明" prop="explanation">
           <el-input v-model="form.explanation" type="textarea" placeholder="请输入内容" />
         </el-form-item>
-        <p style="color: #ff4949">
+        <p style="color: #ff4949" >
           说明（3分以下或者4分及以上的需要说明情况）
         </p>
       </el-form>
@@ -298,6 +298,9 @@ export default {
         updateTime: [
           { required: true, message: "$comment不能为空", trigger: "blur" }
         ],
+        explanation: [
+          { required: true, message: "$comment不能为空", trigger: "blur" }
+        ]
       },
 
     };
